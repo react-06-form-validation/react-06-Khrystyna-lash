@@ -6,20 +6,20 @@ export const createBookingSchema = (availableTimeSlots = []) =>
     bookerName: z
       .string()
       .trim()
-      .min(2, 'Name must be at least 2 characters'),
+      .min(2, 'Booker name must be at least 2 characters long'),
 
     // Optional: empty string is allowed, but a non-empty value must be a valid email.
     bookerEmail: z
       .string()
       .trim()
-      .email('Please enter a valid email address')
+      .email('Invalid email address')
       .optional()
       .or(z.literal('')),
 
     eventName: z
       .string()
       .trim()
-      .min(2, 'Event name must be at least 2 characters'),
+      .min(2, 'Event name must be at least 2 characters long'),
 
     eventDate: z
       .string()
@@ -35,14 +35,14 @@ export const createBookingSchema = (availableTimeSlots = []) =>
       .number({ invalid_type_error: 'Number of guests is required' })
       .int('Number of guests must be a whole number')
       .min(1, 'There must be at least 1 guest')
-      .max(10, 'There can be at most 10 guests'),
+      .max(10, 'Number of Guests must be less than or equal to 10'),
 
     
     timeSlot:
       availableTimeSlots.length > 0
         ? z.enum(availableTimeSlots, {
             errorMap: () => ({
-              message: 'Please select one of the available time slots',
+              message: 'Selected time slot is unavailable',
             }),
           })
         : z.string().min(1, 'Please select a time slot'),
@@ -51,7 +51,7 @@ export const createBookingSchema = (availableTimeSlots = []) =>
       .string()
       .trim()
       .min(1, 'Event link is required')
-      .url('Please enter a valid URL'),
+      .url('Invalid URL. Please enter a valid event link'),
   });
 
 export default createBookingSchema;
