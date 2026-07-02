@@ -87,7 +87,7 @@ export default function BookingForm() {
           Time Slot
         </label>
         <select {...register('timeSlot')} id="timeSlot" className={styles.input}>
-          <option value="">Select a time slot</option>
+          <option value="">-- Select a time slot --</option>
           {timeSlots.map((slot) => (
             <option key={slot} value={slot}>
               {slot}
